@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Список дел</title>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+
+<style type="text/css">
+    P.fig {
+     text-align: center;
+</style>
+
+
+
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" sizes="57x57" href="https://i.imgur.com/N9jfhsf.png"/>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="https://i.imgur.com/N9jfhsf.png"/>
+<link rel="apple-touch-icon-120x120" sizes="120x120" href="https://i.imgur.com/n3I0p4j.png"/>
+<link rel="apple-touch-icon-120x120-precomposed" sizes="120x120" href="https://i.imgur.com/n3I0p4j.png"/>
+
+</head>
+<body>
+
+
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container py-5 h-90">
+    <div class="row d-flex justify-content-center align-items-center h-90">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">Список дел</h4>
+            <form id="myForm" class="row" action="/add" method="post">
+              <div class="col-4">
+                <div class="form-outline">
+                  <input type="text" id="title" name="title" class="form-control" placeholder="Что будем делать"/>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+
+            <table class="table mb-4">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Список дел</th>
+                      <th scope="col">Статус</th>
+                      <th scope="col">Действия</th>
+                      <th scope="col">Дата и время</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in todo_list %}
+                    <tr>
+                      <th scope="row">{{todo.id }}</th>
+                      <td>{{ todo.title }}</td>
+                      <td>
+                        {% if todo.complete == False %}
+                        <div class="alert alert-secondary" role="alert">В процессе</div>
+                        {% else %}
+                        <div class="alert alert-success" role="alert">Выполнено</div>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <a class="btn btn-success" href="/update/{{ todo.id }}">Готово</a>
+                        <a class="btn btn-danger ms-1" href="/delete/{{ todo.id }}">Удалить</a>
+                      </td>
+                      <td>{{ todo.date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
